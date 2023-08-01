@@ -1,8 +1,8 @@
 <?php
 
-namespace Adso\model;
+namespace app\model;
 
-use Adso\libs\Database;
+use app\libs\Database;
 
 class UserModel
 {
@@ -18,9 +18,11 @@ class UserModel
 
     function getUsers()
     {
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT * FROM admon WHERE correo = :user AND clave :password";
         $stm = $this->connection->prepare($sql);
+        $stm->bindParam(':user',$user);
+        $stm->bindParam(':password',$password);
         $stm->execute();
-        return $stm->fetchAll();
+        return $stm->fetch();
     }
 }
